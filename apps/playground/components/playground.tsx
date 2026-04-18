@@ -11,7 +11,6 @@ interface PlaygroundProps {
 }
 
 export function Playground({ config, component: Component }: PlaygroundProps) {
-  // Build initial values from defaults
   const defaults = useMemo(() => {
     const d: Record<string, unknown> = {};
     for (const c of config.controls) {
@@ -23,8 +22,10 @@ export function Playground({ config, component: Component }: PlaygroundProps) {
   const [values, setValues] = useState<Record<string, unknown>>(defaults);
   const [children, setChildren] = useState(config.childrenControl?.defaultValue ?? "");
   const [copied, setCopied] = useState(false);
+  const [previewMode, setPreviewMode] = useState<"light" | "dark">(
+    config.category === "block" ? "light" : "light"
+  );
 
-  // Merge dynamic values with static props
   const componentProps = useMemo(() => {
     const filtered: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(values)) {
@@ -36,6 +37,9 @@ export function Playground({ config, component: Component }: PlaygroundProps) {
   }, [values, config.staticProps]);
 
   const code = generateJSX(config.name, componentProps, defaults, children || undefined);
+
+  // Block components get full-width preview, primitives get centered
+  const isFullWidth = config.category === "block" || config.category === "layout";
 
   function handleCopy() {
     navigator.clipboard.writeText(code);
@@ -66,12 +70,37 @@ export function Playground({ config, component: Component }: PlaygroundProps) {
             </div>
             <p className="text-sm text-neutral-500 mt-1">{config.description}</p>
           </div>
-          <button
-            onClick={handleReset}
-            className="text-xs text-neutral-400 hover:text-white border border-neutral-700 hover:border-neutral-500 px-3 py-1.5 rounded-md transition-colors"
-          >
-            Reset
-          </button>
+          <div className="flex items-center gap-3">
+            {/* Light/Dark Toggle */}
+            <div className="flex items-center border border-neutral-700 rounded-lg overflow-hidden text-xs">
+              <button
+                onClick={() => setPreviewMode("light")}
+                className={`px-3 py-1.5 transition-colors ${
+                  previewMode === "light"
+                    ? "bg-white text-black"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+              >
+                Light
+              </button>
+              <button
+                onClick={() => setPreviewMode("dark")}
+                className={`px-3 py-1.5 transition-colors ${
+                  previewMode === "dark"
+                    ? "bg-neutral-700 text-white"
+                    : "text-neutral-400 hover:text-white"
+                }`}
+              >
+                Dark
+              </button>
+            </div>
+            <button
+              onClick={handleReset}
+              className="text-xs text-neutral-400 hover:text-white border border-neutral-700 hover:border-neutral-500 px-3 py-1.5 rounded-md transition-colors"
+            >
+              Reset
+            </button>
+          </div>
         </div>
       </div>
 
@@ -91,13 +120,20 @@ export function Playground({ config, component: Component }: PlaygroundProps) {
         {/* Preview + Code */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Live Preview */}
-          <div className="flex-1 p-6 lg:p-10">
+          <div className="flex-1 p-4 lg:p-6">
             <div className="mb-3 flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-green-500" />
-              <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">Live Preview</span>
+              <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">
+                Live Preview
+              </span>
             </div>
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-8 min-h-[200px] flex items-center justify-center overflow-hidden">
-              <div className="w-full">
+
+            <div
+              className={`preview-panel ${previewMode === "dark" ? "preview-dark" : ""} rounded-xl border border-neutral-800 overflow-hidden ${
+                isFullWidth ? "" : "p-8 min-h-[200px] flex items-center justify-center"
+              }`}
+            >
+              <div className={isFullWidth ? "w-full" : "w-full"}>
                 {children ? (
                   <Component {...componentProps}>{children}</Component>
                 ) : (
@@ -110,7 +146,9 @@ export function Playground({ config, component: Component }: PlaygroundProps) {
           {/* Code Output */}
           <div className="border-t border-neutral-800 p-6">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">Generated JSX</span>
+              <span className="text-xs text-neutral-500 uppercase tracking-wider font-medium">
+                Generated JSX
+              </span>
               <button
                 onClick={handleCopy}
                 className="text-xs text-neutral-400 hover:text-white border border-neutral-700 hover:border-neutral-500 px-3 py-1 rounded-md transition-colors"
