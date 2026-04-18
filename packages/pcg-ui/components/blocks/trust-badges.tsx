@@ -29,7 +29,7 @@ export function TrustBadges({
   return (
     <div className={className}>
       {heading && (
-        <div className="text-xs text-[var(--color-text-muted,#666)] mb-2 font-medium uppercase tracking-wide">
+        <div className="text-[10px] text-[var(--color-text-muted,#666)]/60 mb-4 font-semibold uppercase tracking-[0.25em]">
           {heading}
         </div>
       )}
@@ -38,33 +38,39 @@ export function TrustBadges({
         className={
           layout === "grid"
             ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"
-            : "flex gap-4 items-center flex-wrap"
+            : "flex items-center flex-wrap"
         }
       >
-        {badges.map((badge) => (
-          <div
-            key={badge.id}
-            className="flex items-center gap-2"
-            title={badge.label}
-          >
-            <img
-              src={badge.image}
-              alt={badge.label}
-              style={{ height: badgeSize, width: badgeSize }}
-              className="object-contain opacity-90"
-              loading="lazy"
-            />
-            {showLabels && (
-              <span className="text-xs text-[var(--color-text-muted,#666)] hidden sm:inline">
-                {badge.shortLabel || badge.label}
-              </span>
+        {badges.map((badge, index) => (
+          <div key={badge.id} className="flex items-center">
+            <div
+              className="flex items-center gap-3 px-4 py-2 group"
+              title={badge.label}
+            >
+              <img
+                src={badge.image}
+                alt={badge.label}
+                style={{ height: badgeSize, width: badgeSize }}
+                className="object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                loading="lazy"
+              />
+              {showLabels && (
+                <span className="text-xs text-[var(--color-text-muted,#666)]/70 hidden sm:inline font-medium tracking-wide">
+                  {badge.shortLabel || badge.label}
+                </span>
+              )}
+            </div>
+
+            {/* Subtle divider between items in row layout */}
+            {layout === "row" && index < badges.length - 1 && (
+              <div className="hidden md:block h-6 w-px bg-gradient-to-b from-transparent via-[var(--color-border,#e5e5e5)]/30 to-transparent mx-1" />
             )}
           </div>
         ))}
       </div>
 
       {description && (
-        <p className="text-xs text-[var(--color-text-muted,#666)] mt-2">
+        <p className="text-xs text-[var(--color-text-muted,#666)]/50 mt-3 leading-relaxed">
           {description}
         </p>
       )}

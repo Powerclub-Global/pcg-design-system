@@ -38,7 +38,10 @@ export function Pagination({
       );
       if (startPage > 2) {
         items.push(
-          <span key="ellipsis-start" className="px-2 text-[var(--color-muted-foreground)]">
+          <span
+            key="ellipsis-start"
+            className="flex h-10 w-8 items-center justify-center text-[var(--color-muted-foreground)]"
+          >
             ...
           </span>
         );
@@ -54,7 +57,10 @@ export function Pagination({
     if (endPage < pages) {
       if (endPage < pages - 1) {
         items.push(
-          <span key="ellipsis-end" className="px-2 text-[var(--color-muted-foreground)]">
+          <span
+            key="ellipsis-end"
+            className="flex h-10 w-8 items-center justify-center text-[var(--color-muted-foreground)]"
+          >
             ...
           </span>
         );
@@ -75,16 +81,16 @@ export function Pagination({
   return (
     <nav
       aria-label="Pagination"
-      className={cn("flex items-center justify-center gap-2 py-4", className)}
+      className={cn("flex items-center justify-center gap-1.5 py-4", className)}
     >
       <NavButton
-        label="Previous"
+        direction="prev"
         disabled={page <= 1}
         onClick={() => onPageChange(Math.max(1, page - 1))}
       />
       {renderPageNumbers()}
       <NavButton
-        label="Next"
+        direction="next"
         disabled={page >= pages}
         onClick={() => onPageChange(Math.min(pages, page + 1))}
       />
@@ -106,10 +112,18 @@ function PageButton({
       type="button"
       onClick={() => onClick(page)}
       className={cn(
-        "h-9 min-w-[2.25rem] rounded-md px-3 text-sm font-medium transition-colors",
+        "h-10 min-w-[2.5rem] rounded-lg px-3 text-sm font-semibold",
+        "transition-all duration-200 ease-out",
+        "active:scale-[0.96]",
         active
-          ? "bg-[var(--color-accent)] text-white"
-          : "border border-[var(--color-border)] text-[var(--color-foreground)] hover:bg-[var(--color-accent)]/10"
+          ? [
+              "bg-[var(--color-accent)] text-white",
+              "shadow-md shadow-[var(--color-accent)]/25",
+            ]
+          : [
+              "text-[var(--color-foreground)]",
+              "hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]",
+            ]
       )}
     >
       {page}
@@ -118,11 +132,11 @@ function PageButton({
 }
 
 function NavButton({
-  label,
+  direction,
   disabled,
   onClick,
 }: {
-  label: string;
+  direction: "prev" | "next";
   disabled: boolean;
   onClick: () => void;
 }) {
@@ -131,14 +145,31 @@ function NavButton({
       type="button"
       disabled={disabled}
       onClick={onClick}
+      aria-label={direction === "prev" ? "Previous page" : "Next page"}
       className={cn(
-        "h-9 rounded-md border border-[var(--color-border)] px-4 text-sm font-medium transition-colors",
+        "flex h-10 items-center gap-1.5 rounded-lg border border-[var(--color-border)] px-4 text-sm font-medium",
+        "transition-all duration-200 ease-out",
+        "active:scale-[0.96]",
         disabled
-          ? "cursor-not-allowed opacity-50"
-          : "text-[var(--color-foreground)] hover:bg-[var(--color-accent)]/10"
+          ? "cursor-not-allowed opacity-30"
+          : "text-[var(--color-foreground)] hover:border-[var(--color-accent)]/40 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)]"
       )}
     >
-      {label}
+      {direction === "prev" ? (
+        <>
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          <span className="hidden sm:inline">Prev</span>
+        </>
+      ) : (
+        <>
+          <span className="hidden sm:inline">Next</span>
+          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </>
+      )}
     </button>
   );
 }
