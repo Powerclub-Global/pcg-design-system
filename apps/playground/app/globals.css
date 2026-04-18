@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "@pcg/tokens/css/base.css";
+
+/* Playground uses powerclub-global theme as default */
+:root {
+  --color-primary: #0f172a;
+  --color-primary-foreground: #f8fafc;
+  --color-accent: #6366f1;
+  --color-accent-foreground: #ffffff;
+  --font-display: 'Inter', system-ui, sans-serif;
+}
