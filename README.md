@@ -1,4 +1,4 @@
-# PCG Design System
+# PCG component library
 
 Unified design system and component library for the PowerClub Global ecosystem.
 
