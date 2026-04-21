@@ -13,6 +13,11 @@ const categoryLabels: Record<string, string> = {
 
 const categoryOrder = ["ui", "layout", "block", "commerce"];
 
+const getStartedLinks = [
+  { name: "Introduction", href: "/docs/introduction" },
+  { name: "Installation", href: "/docs/installation" },
+];
+
 export function DocsSidebar() {
   const pathname = usePathname();
 
@@ -24,6 +29,34 @@ export function DocsSidebar() {
 
   return (
     <aside className="sticky top-14 h-[calc(100vh-3.5rem)] w-64 shrink-0 overflow-y-auto border-r border-neutral-800/60 bg-neutral-950 px-4 py-6">
+      <div className="mb-6">
+        <h3 className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
+          Get Started
+        </h3>
+        <ul className="space-y-0.5">
+          {getStartedLinks.map((item) => {
+            const active = pathname === item.href;
+            return (
+              <li key={item.href} className="relative">
+                {active && (
+                  <span className="absolute left-0 top-1/2 h-5 w-[2px] -translate-y-1/2 rounded-full bg-violet-500" />
+                )}
+                <Link
+                  href={item.href}
+                  className={`block rounded-md px-3 py-1.5 text-sm transition-colors ${
+                    active
+                      ? "text-violet-400"
+                      : "text-neutral-400 hover:bg-white/[0.03] hover:text-white"
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
       {categoryOrder
         .filter((cat) => grouped.has(cat))
         .map((cat) => {
