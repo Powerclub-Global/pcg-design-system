@@ -79,8 +79,9 @@
   background: transparent !important;
   padding: 1rem 1.25rem 1rem 0;
   counter-reset: line;
-  font-size: 0.875rem;
-  line-height: 1;
+  font-size: 0.8rem;
+  line-height: 1.1;
+  margin: 0;
 }
 .shiki-wrap pre.shiki code {
   display: block;
@@ -89,9 +90,9 @@
 .shiki-wrap pre.shiki .line {
   display: block;
   position: relative;
-  padding-left: 3.75rem;
-  padding-top: 0.15rem;
-  padding-bottom: 0.15rem;
+  padding: 0 0 0 3.75rem;
+  margin: 0;
+  height: 1.1em;
 }
 .shiki-wrap pre.shiki .line:empty::after {
   content: "\00a0";
