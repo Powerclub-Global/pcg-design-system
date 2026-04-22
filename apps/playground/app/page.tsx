@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { TopNav } from "@/components/top-nav";
+import { InstallBlock } from "@/components/install-block";
 import { componentRegistry } from "@/configs/registry";
 
 export default function HomePage() {
@@ -302,20 +303,7 @@ import { Button } from "@powerclub-global/ui";
       <section className="border-b border-neutral-900">
         <div className="mx-auto max-w-4xl px-8 py-28 text-center">
           <h2 className="text-5xl font-bold tracking-tight mb-10">Get started in seconds</h2>
-          <div className="rounded-xl border border-neutral-800 overflow-hidden text-left">
-            <div className="flex items-center border-b border-neutral-800 text-xs">
-              <span className="px-4 py-3 text-white border-b border-white -mb-px">pnpm</span>
-              <span className="px-4 py-3 text-neutral-500">npm</span>
-              <span className="px-4 py-3 text-neutral-500">yarn</span>
-              <span className="px-4 py-3 text-neutral-500">bun</span>
-            </div>
-            <pre className="px-4 py-5 text-sm font-mono overflow-x-auto">
-              <code className="text-neutral-200">
-                <span className="text-neutral-600">~</span>{" "}
-                pnpm add @powerclub-global/ui @powerclub-global/tokens
-              </code>
-            </pre>
-          </div>
+          <InstallBlock />
           <p className="mt-4 text-sm text-neutral-500">
             Workspace-aware. Drops into any Next.js 15+ / Tailwind v4 app.
           </p>
