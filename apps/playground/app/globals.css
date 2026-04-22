@@ -80,7 +80,7 @@
   padding: 1rem 1.25rem 1rem 0;
   counter-reset: line;
   font-size: 0.875rem;
-  line-height: 1.65;
+  line-height: 1.45;
   color: #e5e5e5 !important;
 }
 .shiki-wrap pre.shiki code {
@@ -95,7 +95,9 @@
   display: block;
   position: relative;
   padding-left: 3.75rem;
-  min-height: 1.65em;
+}
+.shiki-wrap pre.shiki .line:empty::after {
+  content: "\00a0";
 }
 .shiki-wrap pre.shiki .line::before {
   counter-increment: line;
