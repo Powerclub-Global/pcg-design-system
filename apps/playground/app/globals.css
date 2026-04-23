@@ -4,6 +4,33 @@
 @source "../../../packages/pcg-ui/components/**/*.{ts,tsx}";
 @source "../../../packages/pcg-ui/lib/**/*.{ts,tsx}";
 
+/* Selection locked to copyable surfaces only */
+body {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+pre,
+code,
+.shiki-wrap,
+.selectable,
+input,
+textarea,
+[contenteditable="true"] {
+  -webkit-user-select: text;
+  user-select: text;
+  cursor: text;
+}
+button,
+a,
+[role="button"] {
+  cursor: pointer;
+}
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
 /* Playground shell — always dark */
 :root {
   --color-primary: #0f172a;
