@@ -48,9 +48,9 @@ export function Playground({
   const isFullWidth = config.category === "block" || config.category === "layout";
 
   function copy(key: string, text: string) {
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text).catch(() => {});
     setCopiedKey(key);
-    setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 1500);
+    setTimeout(() => setCopiedKey((k) => (k === key ? null : k)), 2500);
   }
 
   function handleReset() {
@@ -100,10 +100,12 @@ export function Playground({
         {view === "preview" ? (
           <div
             className={`preview-panel preview-dark ${
-              isFullWidth ? "" : "flex min-h-[340px] items-center justify-center p-10"
+              isFullWidth
+                ? "flex h-[560px] overflow-auto p-6"
+                : "flex min-h-[340px] items-center justify-center p-10"
             }`}
           >
-            <div className={isFullWidth ? "w-full" : ""}>
+            <div className={isFullWidth ? "m-auto w-full" : ""}>
               {children ? (
                 <Component {...componentProps}>{children}</Component>
               ) : (

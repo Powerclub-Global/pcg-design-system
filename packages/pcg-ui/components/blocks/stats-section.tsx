@@ -156,12 +156,12 @@ export function StatsSection({
         )}
 
         <div
-          className={`grid gap-8 ${
+          className={`grid gap-x-6 gap-y-10 ${
             columns === 2
               ? "grid-cols-2"
               : columns === 3
-              ? "grid-cols-2 md:grid-cols-3"
-              : "grid-cols-2 md:grid-cols-4"
+              ? "grid-cols-3"
+              : "grid-cols-4"
           }`}
         >
           {stats.map((stat, i) => (

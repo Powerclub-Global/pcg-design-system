@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Playground } from "@/components/playground";
 import type { ComponentConfig } from "@/components/types";
 
@@ -69,7 +69,12 @@ const componentMap: Record<string, React.ComponentType<Record<string, unknown>>>
 };
 
 function PaginationWrapper(props: Record<string, unknown>) {
-  return <Pagination {...(props as any)} onPageChange={() => {}} />;
+  const { page: pageProp, ...rest } = props as any;
+  const [page, setPage] = useState<number>(typeof pageProp === "number" ? pageProp : 1);
+  useEffect(() => {
+    if (typeof pageProp === "number") setPage(pageProp);
+  }, [pageProp]);
+  return <Pagination {...rest} page={page} onPageChange={setPage} />;
 }
 
 function StatsSectionWrapper(props: Record<string, unknown>) {
@@ -105,27 +110,31 @@ function DateRangePickerWrapper(props: Record<string, unknown>) {
   const [start, setStart] = useState<Date | null>(null);
   const [end, setEnd] = useState<Date | null>(null);
   return (
-    <DateRangePicker
-      {...(props as any)}
-      startDate={start}
-      endDate={end}
-      onDateChange={(s: Date | null, e: Date | null) => {
-        setStart(s);
-        setEnd(e);
-      }}
-    />
+    <div className="flex min-h-[520px] w-full max-w-sm flex-col items-start pt-4">
+      <DateRangePicker
+        {...(props as any)}
+        startDate={start}
+        endDate={end}
+        onDateChange={(s: Date | null, e: Date | null) => {
+          setStart(s);
+          setEnd(e);
+        }}
+      />
+    </div>
   );
 }
 
 function ImageUploadWrapper(props: Record<string, unknown>) {
   const [urls, setUrls] = useState<string[]>([]);
   return (
-    <ImageUpload
-      {...(props as any)}
-      value={urls}
-      onChange={setUrls}
-      onUpload={async (files: File[]) => files.map((f) => URL.createObjectURL(f))}
-    />
+    <div className="w-full max-w-2xl py-4">
+      <ImageUpload
+        {...(props as any)}
+        value={urls}
+        onChange={setUrls}
+        onUpload={async (files: File[]) => files.map((f) => URL.createObjectURL(f))}
+      />
+    </div>
   );
 }
 

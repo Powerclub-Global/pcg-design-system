@@ -77,14 +77,17 @@ export function DateRangePicker({
   };
 
   const handleDateClick = (date: Date) => {
-    if (selecting === "start" || (startDate && date < startDate)) {
+    if (selecting === "start" || !startDate || (endDate && startDate)) {
       onDateChange(date, null);
       setSelecting("end");
+      return;
+    }
+    if (date < startDate) {
+      onDateChange(date, startDate);
     } else {
       onDateChange(startDate, date);
-      setSelecting("start");
-      setIsOpen(false);
     }
+    setSelecting("start");
   };
 
   const handlePrevMonth = () => {
@@ -127,7 +130,7 @@ export function DateRangePicker({
           <line x1="8" y1="2" x2="8" y2="6" strokeWidth={2} strokeLinecap="round" />
           <line x1="3" y1="10" x2="21" y2="10" strokeWidth={2} />
         </svg>
-        <span className="text-sm truncate">
+        <span className="flex-1 truncate text-left text-sm">
           {startDate || endDate
             ? `${formatDate(startDate)} - ${formatDate(endDate)}`
             : placeholder}
@@ -249,8 +252,13 @@ export function DateRangePicker({
             </button>
             <button
               type="button"
-              onClick={() => setIsOpen(false)}
-              className="rounded-sm px-4 py-2 text-sm font-semibold uppercase tracking-wider transition-all hover:brightness-110"
+              onClick={() => {
+                setIsOpen(false);
+                setSelecting("start");
+                setHoverDate(null);
+              }}
+              disabled={!startDate}
+              className="rounded-sm px-4 py-2 text-sm font-semibold uppercase tracking-wider transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-40"
               style={{ background: "#ffffff", color: "#000000" }}
             >
               Apply

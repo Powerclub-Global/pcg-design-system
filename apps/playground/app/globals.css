@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "@powerclub-global/tokens/css/base.css";
 
+@source "../../../packages/pcg-ui/components/**/*.{ts,tsx}";
+@source "../../../packages/pcg-ui/lib/**/*.{ts,tsx}";
+
 /* Playground shell — always dark */
 :root {
   --color-primary: #0f172a;

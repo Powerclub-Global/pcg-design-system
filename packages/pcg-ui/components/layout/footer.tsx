@@ -65,7 +65,7 @@ export function Footer({
       }}
     >
       <div className="mx-auto max-w-[1400px] px-6 py-16">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-12">
           <div>
             {brand.logo ? (
               <div className="mb-4">{brand.logo}</div>

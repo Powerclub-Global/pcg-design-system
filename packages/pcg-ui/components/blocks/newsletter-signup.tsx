@@ -69,7 +69,7 @@ export function NewsletterSignup({
   if (variant === "card") {
     return (
       <div
-        className={`rounded-xl p-8 text-center backdrop-blur-xl ${className}`}
+        className={`mx-auto w-full max-w-md rounded-xl p-8 text-center backdrop-blur-xl ${className}`}
         style={{
           background: "rgba(255,255,255,0.06)",
           border: "1px solid rgba(255,255,255,0.1)",

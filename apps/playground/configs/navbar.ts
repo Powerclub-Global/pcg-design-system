@@ -38,5 +38,6 @@ export const navbarConfig: ComponentConfig = {
       { label: "Contact", href: "#contact" },
     ],
     cta: { label: "Get Started", href: "#cta", variant: "primary" },
+    className: "!relative",
   },
 };

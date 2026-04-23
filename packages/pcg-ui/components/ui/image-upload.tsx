@@ -84,7 +84,7 @@ export function ImageUpload({
         <div
           {...getRootProps()}
           className={cn(
-            "cursor-pointer rounded-xl p-8 text-center transition-all",
+            "cursor-pointer rounded-xl p-12 text-center transition-all",
             uploading && "cursor-not-allowed opacity-50"
           )}
           style={{

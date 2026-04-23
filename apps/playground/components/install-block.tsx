@@ -11,10 +11,10 @@ const commands: Record<Manager, string> = {
   bun: "bun add @powerclub-global/ui @powerclub-global/tokens",
 };
 
-const managers: Manager[] = ["pnpm", "npm", "yarn", "bun"];
+const managers: Manager[] = ["npm", "pnpm", "yarn", "bun"];
 
 export function InstallBlock() {
-  const [active, setActive] = useState<Manager>("pnpm");
+  const [active, setActive] = useState<Manager>("npm");
   const [copied, setCopied] = useState(false);
 
   const command = commands[active];

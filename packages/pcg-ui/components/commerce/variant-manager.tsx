@@ -128,24 +128,16 @@ export function VariantManager({
 
       {variants.length === 0 ? (
         <div
-          className="rounded-xl py-8 text-center"
+          className="mx-auto max-w-lg rounded-xl px-6 py-6 text-center"
           style={{
             border: "2px dashed rgba(255,255,255,0.1)",
             background: "rgba(255,255,255,0.04)",
           }}
         >
           <div className="mb-2 font-semibold text-white">{emptyTitle}</div>
-          <div className="mb-4 text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
+          <div className="text-sm" style={{ color: "rgba(255,255,255,0.6)" }}>
             {emptyDescription}
           </div>
-          <button
-            type="button"
-            onClick={addVariant}
-            className="rounded-sm px-6 py-3 font-semibold uppercase tracking-wider transition-all hover:brightness-110"
-            style={{ background: "#ffffff", color: "#000000" }}
-          >
-            Add First Variant
-          </button>
         </div>
       ) : (
         <div className="space-y-4">
