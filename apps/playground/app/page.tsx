@@ -415,11 +415,11 @@ function ShowcaseCard({
   return (
     <Link
       href={href}
-      className={`group relative block rounded-2xl border border-neutral-800 p-6 hover:border-neutral-700 transition-colors ${
+      className={`group relative flex flex-col rounded-2xl border border-neutral-800 p-6 hover:border-neutral-700 transition-colors ${
         large ? "md:row-span-2" : ""
       }`}
     >
-      <div className="flex min-h-[180px] items-center justify-center">{children}</div>
+      <div className="flex flex-1 min-h-[180px] items-center justify-center">{children}</div>
       <div className="mt-6 flex items-center justify-between text-xs">
         <span className="text-neutral-500">{category}</span>
         <span className="font-mono text-neutral-500 group-hover:text-white transition-colors">
